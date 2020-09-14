@@ -1,0 +1,1049 @@
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Docker stack for getting started on IOT on the Raspberry PI">
+      
+      
+      
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.5.12">
+    
+    
+      
+        <title>Backups - IOTstack</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.4dd2dd8d.min.css">
+      
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#backups" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href=".." title="IOTstack" class="md-header-nav__button md-logo" aria-label="IOTstack">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            IOTstack
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Backups
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="IOTstack" class="md-nav__button md-logo" aria-label="IOTstack">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    IOTstack
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="IOTstack" class="md-nav__link">
+      IOTstack
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Accessing-your-Device-from-the-internet/" title="Accessing your device from the internet" class="md-nav__link">
+      Accessing your device from the internet
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Adminer/" title="Adminer" class="md-nav__link">
+      Adminer
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Backups
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="./" title="Backups" class="md-nav__link md-nav__link--active">
+      Backups
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#cloud-backups" class="md-nav__link">
+    Cloud Backups
+  </a>
+  
+    <nav class="md-nav" aria-label="Cloud Backups">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dropbox-uploader" class="md-nav__link">
+    Dropbox-Uploader
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rclone-google-drive" class="md-nav__link">
+    rclone (Google Drive)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#influxdb" class="md-nav__link">
+    Influxdb
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker-backups" class="md-nav__link">
+    Docker backups
+  </a>
+  
+    <nav class="md-nav" aria-label="Docker backups">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cloud-integration" class="md-nav__link">
+    Cloud integration
+  </a>
+  
+    <nav class="md-nav" aria-label="Cloud integration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#drobox-uploader" class="md-nav__link">
+    Drobox-Uploader
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rclone" class="md-nav__link">
+    rclone
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pruning-online-backups" class="md-nav__link">
+    Pruning online backups
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#restoring-a-backup" class="md-nav__link">
+    Restoring a backup
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#added-your-dropbox-token-incorrectly-or-aborted-the-install-at-the-token-screen" class="md-nav__link">
+    Added your Dropbox token incorrectly or aborted the install at the token screen
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#auto-mount-gdrive-with-rclone" class="md-nav__link">
+    Auto-mount Gdrive with rclone
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Blynk_server/" title="Blynk server" class="md-nav__link">
+      Blynk server
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Custom/" title="Custom services and overriding default settings for IOTstack" class="md-nav__link">
+      Custom services and overriding default settings for IOTstack
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Docker-commands/" title="Docker commands" class="md-nav__link">
+      Docker commands
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../EspruinoHub/" title="Espruinohub" class="md-nav__link">
+      Espruinohub
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Getting-Started/" title="Getting started" class="md-nav__link">
+      Getting started
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Grafana/" title="Grafana" class="md-nav__link">
+      Grafana
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Home-Assistant/" title="Home assistant" class="md-nav__link">
+      Home assistant
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Home/" title="Wiki" class="md-nav__link">
+      Wiki
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../How-the-script-works/" title="How the script works" class="md-nav__link">
+      How the script works
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../InfluxDB/" title="InfluxDB" class="md-nav__link">
+      InfluxDB
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../MariaDB/" title="MariaDB" class="md-nav__link">
+      MariaDB
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Misc/" title="Miscellaneous" class="md-nav__link">
+      Miscellaneous
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Mosquitto/" title="Mosquitto" class="md-nav__link">
+      Mosquitto
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../MotionEye/" title="MotionQye" class="md-nav__link">
+      MotionQye
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Native-RTL_433/" title="Native RTL_433" class="md-nav__link">
+      Native RTL_433
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Networking/" title="Networking" class="md-nav__link">
+      Networking
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../NextCloud/" title="Next Cloud" class="md-nav__link">
+      Next Cloud
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Node-RED/" title="Node-RED" class="md-nav__link">
+      Node-RED
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Pi-hole/" title="Pi-hole" class="md-nav__link">
+      Pi-hole
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Plex/" title="Plex" class="md-nav__link">
+      Plex
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Portainer-agent/" title="Portainer agent" class="md-nav__link">
+      Portainer agent
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Portainer/" title="Portainer" class="md-nav__link">
+      Portainer
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../PostgreSQL/" title="PostgreSQL" class="md-nav__link">
+      PostgreSQL
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Python/" title="Python" class="md-nav__link">
+      Python
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../RPIEasy_native/" title="RPIEasy" class="md-nav__link">
+      RPIEasy
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../RTL_433-docker/" title="RTL_433 Docker" class="md-nav__link">
+      RTL_433 Docker
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../TasmoAdmin/" title="TasmoAdmin" class="md-nav__link">
+      TasmoAdmin
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Understanding-Containers/" title="Understanding containers" class="md-nav__link">
+      Understanding containers
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Updating-the-Project/" title="Updating the project" class="md-nav__link">
+      Updating the project
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Zigbee2MQTT/" title="Zigbe2MQTT" class="md-nav__link">
+      Zigbe2MQTT
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../deconz/" title="deCONZ" class="md-nav__link">
+      deCONZ
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../diyHue/" title="DIY hue" class="md-nav__link">
+      DIY hue
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../openHAB/" title="Openhab" class="md-nav__link">
+      Openhab
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../x2go/" title="x2go" class="md-nav__link">
+      x2go
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#cloud-backups" class="md-nav__link">
+    Cloud Backups
+  </a>
+  
+    <nav class="md-nav" aria-label="Cloud Backups">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dropbox-uploader" class="md-nav__link">
+    Dropbox-Uploader
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rclone-google-drive" class="md-nav__link">
+    rclone (Google Drive)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#influxdb" class="md-nav__link">
+    Influxdb
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker-backups" class="md-nav__link">
+    Docker backups
+  </a>
+  
+    <nav class="md-nav" aria-label="Docker backups">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cloud-integration" class="md-nav__link">
+    Cloud integration
+  </a>
+  
+    <nav class="md-nav" aria-label="Cloud integration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#drobox-uploader" class="md-nav__link">
+    Drobox-Uploader
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rclone" class="md-nav__link">
+    rclone
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pruning-online-backups" class="md-nav__link">
+    Pruning online backups
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#restoring-a-backup" class="md-nav__link">
+    Restoring a backup
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#added-your-dropbox-token-incorrectly-or-aborted-the-install-at-the-token-screen" class="md-nav__link">
+    Added your Dropbox token incorrectly or aborted the install at the token screen
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#auto-mount-gdrive-with-rclone" class="md-nav__link">
+    Auto-mount Gdrive with rclone
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  
+                
+                
+                <h1 id="backups">Backups</h1>
+<p>Because containers can easily be rebuilt from docker hub we only have to back up the data in the "volumes" directory.</p>
+<h2 id="cloud-backups">Cloud Backups</h2>
+<h3 id="dropbox-uploader">Dropbox-Uploader</h3>
+<p>This a great utility to easily upload data from your Pi to the cloud. https://magpi.raspberrypi.org/articles/dropbox-raspberry-pi. It can be installed from the Menu under Backups.</p>
+<h3 id="rclone-google-drive">rclone (Google Drive)</h3>
+<p>This is a service to upload to Google Drive. The config is described <a href="https://medium.com/@artur.klauser/mounting-google-drive-on-raspberry-pi-f5002c7095c2">here</a>. Install it from the menu then follow the link for these sections:
+* Getting a Google Drive Client ID
+* Setting up the Rclone Configuration</p>
+<p>When naming the service in <code>rclone config</code> ensure to call it "gdrive"</p>
+<p><strong>The Auto-mounting instructions for the drive in the link don't work on Rasbian</strong>. Auto-mounting of the drive isn't necessary for the backup script.</p>
+<p>If you want your Google Drive to mount on every boot then follow the instructions at the bottom of the wiki page</p>
+<h2 id="influxdb">Influxdb</h2>
+<p><code>~/IOTstack/scripts/backup_influxdb.sh</code> does a database snapshot and stores it in ~/IOTstack/backups/influxdb/db . This can be restored with the help a script (that I still need to write)</p>
+<h2 id="docker-backups">Docker backups</h2>
+<p>The script <code>~/IOTstack/scripts/docker_backup.sh</code> performs the master backup for the stack. </p>
+<p>This script can be placed in a cron job to backup on a schedule.
+Edit the crontab with<code>crontab -e</code>
+Then add <code>0 23 * * * ~/IOTstack/scripts/docker_backup.sh &gt;/dev/null 2&gt;&amp;1</code> to have a backup every night at 23:00.</p>
+<p>This script cheats by copying the volume folder live. The correct way would be to stop the stack first then copy the volumes and restart. The cheating method shouldn't be a problem unless you have fast changing data like in influxdb. This is why the script makes a database export of influxdb and ignores its volume. </p>
+<h3 id="cloud-integration">Cloud integration</h3>
+<p>The docker_backup.sh script now no longer requires modification to enable cloud backups. It now tests for the presence of and enable file in the backups folder</p>
+<h4 id="drobox-uploader">Drobox-Uploader</h4>
+<p>The backup tests for a file called <code>~/IOTstack/backups/dropbox</code>, if it is present it will upload to dropbox. To disable dropbox upload delete the file. To enable run <code>sudo touch ~/IOTstack/backups/dropbox</code></p>
+<h4 id="rclone">rclone</h4>
+<p>The backup tests for a file called <code>~/IOTstack/backups/rclone</code>, if it is present it will upload to google drive. To disable rclone upload delete the file. To enable run <code>sudo touch ~/IOTstack/backups/rclone</code></p>
+<h4 id="pruning-online-backups">Pruning online backups</h4>
+<p>@877dev has added functionality to prune both local and cloud backups. For dropbox make sure you dont have any files that contain spaces in your backup directory as the script cannot handle it at this time.</p>
+<h3 id="restoring-a-backup">Restoring a backup</h3>
+<p>The "volumes" directory contains all the persistent data necessary to recreate the container. The docker-compose.yml and the environment files are optional as they can be regenerated with the menu. Simply copy the volumes directory into the IOTstack directory, Rebuild the stack and start. </p>
+<h2 id="added-your-dropbox-token-incorrectly-or-aborted-the-install-at-the-token-screen">Added your Dropbox token incorrectly or aborted the install at the token screen</h2>
+<p>Make sure you are running the latest version of the project <a href="https://github.com/gcgarner/IOTstack/wiki/Updating-the-Project">link</a>.</p>
+<p>Run <code>~/Dropbox-Uploader/dropbox_uploader.sh unlink</code> and if you have added it key then it will prompt you to confirm its removal. If no key was found it will ask you for a new key.</p>
+<p>Confirm by running <code>~/Dropbox-Uploader/dropbox_uploader.sh</code> it should ask you for your key if you removed it or show you the following prompt if it has the key:</p>
+<pre><code> $ ~/Dropbox-Uploader/dropbox_uploader.sh
+Dropbox Uploader v1.0
+Andrea Fabrizi - andrea.fabrizi@gmail.com
+
+Usage: /home/pi/Dropbox-Uploader/dropbox_uploader.sh [PARAMETERS] COMMAND...
+
+Commands:
+     upload   &lt;LOCAL_FILE/DIR ...&gt;  &lt;REMOTE_FILE/DIR&gt;
+     download &lt;REMOTE_FILE/DIR&gt; [LOCAL_FILE/DIR]
+     delete   &lt;REMOTE_FILE/DIR&gt;
+     move     &lt;REMOTE_FILE/DIR&gt; &lt;REMOTE_FILE/DIR&gt;
+     copy     &lt;REMOTE_FILE/DIR&gt; &lt;REMOTE_FILE/DIR&gt;
+     mkdir    &lt;REMOTE_DIR&gt;
+....
+
+</code></pre>
+
+<p>Ensure you <strong>are not</strong> running as sudo as this will store your api in the /root directory as <code>/root/.dropbox_uploader</code></p>
+<p>If you ran the command with sudo the remove the old token file if it exists with either <code>sudo rm /root/.dropbox_uploader</code> or <code>sudo ~/Dropbox-Uploader/dropbox_uploader.sh unlink</code></p>
+<h2 id="auto-mount-gdrive-with-rclone">Auto-mount Gdrive with rclone</h2>
+<p>To enable rclone to mount on boot you will need to make a user service. Run the following commands</p>
+<pre><code class="bash">mkdir -p ~/.config/systemd/user
+nano ~/.config/systemd/user/gdrive.service
+</code></pre>
+
+<p>Copy the following code into the editor, save and exit</p>
+<pre><code>[Unit]
+Description=rclone: Remote FUSE filesystem for cloud storage
+Documentation=man:rclone(1)
+
+[Service]
+Type=notify
+ExecStartPre=/bin/mkdir -p %h/mnt/gdrive
+ExecStart= \
+  /usr/bin/rclone mount \
+  --fast-list \
+  --vfs-cache-mode writes \
+  gdrive: %h/mnt/gdrive
+
+[Install]
+WantedBy=default.target
+</code></pre>
+
+<p>enable it to start on boot with: (no sudo)</p>
+<pre><code class="bash">systemctl --user enable gdrive.service
+</code></pre>
+
+<p>start with </p>
+<pre><code class="bash">systemctl --user start gdrive.service
+</code></pre>
+
+<p>if you no longer want it to start on boot then type:</p>
+<pre><code class="bash">systemctl --user disable gdrive.service
+</code></pre>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../Adminer/" title="Adminer" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Adminer
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../Blynk_server/" title="Blynk server" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Blynk server
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/vendor.3636a4ec.min.js"></script>
+      <script src="../assets/javascripts/bundle.e9fe3281.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      
+      <script>
+        app = initialize({
+          base: "..",
+          features: [],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.5eca75d3.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>

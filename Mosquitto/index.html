@@ -1,0 +1,970 @@
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Docker stack for getting started on IOT on the Raspberry PI">
+      
+      
+      
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.5.12">
+    
+    
+      
+        <title>Mosquitto - IOTstack</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.4dd2dd8d.min.css">
+      
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#mosquitto" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href=".." title="IOTstack" class="md-header-nav__button md-logo" aria-label="IOTstack">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            IOTstack
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Mosquitto
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="IOTstack" class="md-nav__button md-logo" aria-label="IOTstack">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    IOTstack
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="IOTstack" class="md-nav__link">
+      IOTstack
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Accessing-your-Device-from-the-internet/" title="Accessing your device from the internet" class="md-nav__link">
+      Accessing your device from the internet
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Adminer/" title="Adminer" class="md-nav__link">
+      Adminer
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Backups/" title="Backups" class="md-nav__link">
+      Backups
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Blynk_server/" title="Blynk server" class="md-nav__link">
+      Blynk server
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Custom/" title="Custom services and overriding default settings for IOTstack" class="md-nav__link">
+      Custom services and overriding default settings for IOTstack
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Docker-commands/" title="Docker commands" class="md-nav__link">
+      Docker commands
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../EspruinoHub/" title="Espruinohub" class="md-nav__link">
+      Espruinohub
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Getting-Started/" title="Getting started" class="md-nav__link">
+      Getting started
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Grafana/" title="Grafana" class="md-nav__link">
+      Grafana
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Home-Assistant/" title="Home assistant" class="md-nav__link">
+      Home assistant
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Home/" title="Wiki" class="md-nav__link">
+      Wiki
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../How-the-script-works/" title="How the script works" class="md-nav__link">
+      How the script works
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../InfluxDB/" title="InfluxDB" class="md-nav__link">
+      InfluxDB
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../MariaDB/" title="MariaDB" class="md-nav__link">
+      MariaDB
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Misc/" title="Miscellaneous" class="md-nav__link">
+      Miscellaneous
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Mosquitto
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="./" title="Mosquitto" class="md-nav__link md-nav__link--active">
+      Mosquitto
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#definitions" class="md-nav__link">
+    Definitions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#logging" class="md-nav__link">
+    Logging
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#security" class="md-nav__link">
+    Security
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../MotionEye/" title="MotionQye" class="md-nav__link">
+      MotionQye
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Native-RTL_433/" title="Native RTL_433" class="md-nav__link">
+      Native RTL_433
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Networking/" title="Networking" class="md-nav__link">
+      Networking
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../NextCloud/" title="Next Cloud" class="md-nav__link">
+      Next Cloud
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Node-RED/" title="Node-RED" class="md-nav__link">
+      Node-RED
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Pi-hole/" title="Pi-hole" class="md-nav__link">
+      Pi-hole
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Plex/" title="Plex" class="md-nav__link">
+      Plex
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Portainer-agent/" title="Portainer agent" class="md-nav__link">
+      Portainer agent
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Portainer/" title="Portainer" class="md-nav__link">
+      Portainer
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../PostgreSQL/" title="PostgreSQL" class="md-nav__link">
+      PostgreSQL
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Python/" title="Python" class="md-nav__link">
+      Python
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../RPIEasy_native/" title="RPIEasy" class="md-nav__link">
+      RPIEasy
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../RTL_433-docker/" title="RTL_433 Docker" class="md-nav__link">
+      RTL_433 Docker
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../TasmoAdmin/" title="TasmoAdmin" class="md-nav__link">
+      TasmoAdmin
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Understanding-Containers/" title="Understanding containers" class="md-nav__link">
+      Understanding containers
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Updating-the-Project/" title="Updating the project" class="md-nav__link">
+      Updating the project
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Zigbee2MQTT/" title="Zigbe2MQTT" class="md-nav__link">
+      Zigbe2MQTT
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../deconz/" title="deCONZ" class="md-nav__link">
+      deCONZ
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../diyHue/" title="DIY hue" class="md-nav__link">
+      DIY hue
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../openHAB/" title="Openhab" class="md-nav__link">
+      Openhab
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../x2go/" title="x2go" class="md-nav__link">
+      x2go
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#definitions" class="md-nav__link">
+    Definitions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#logging" class="md-nav__link">
+    Logging
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#security" class="md-nav__link">
+    Security
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  
+                
+                
+                <h1 id="mosquitto">Mosquitto</h1>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://hub.docker.com/_/eclipse-mosquitto">Docker</a></li>
+<li><a href="https://mosquitto.org/">Website</a></li>
+<li><a href="https://mosquitto.org/man/mosquitto-conf-5.html">mosquitto.conf</a> documentation</li>
+<li><a href="https://www.youtube.com/watch?v=1msiFQT_flo">Setting up passwords</a> video</li>
+</ul>
+<h2 id="definitions">Definitions</h2>
+<ul>
+<li><code>docker-compose.yml</code> ⇒ ~/IOTstack/docker-compose.yml</li>
+<li><code>mosquitto.conf</code> ⇒ ~/IOTstack/services/mosquitto/mosquitto.conf</li>
+<li><code>mosquitto.log</code> ⇒ ~/IOTstack/volumes/mosquitto/log/mosquitto.log</li>
+<li><code>service.yml</code> ⇒ ~/IOTstack/.templates/mosquitto/service.yml</li>
+<li><code>volumes/mosquitto</code> ⇒ ~/IOTstack/volumes/mosquitto/</li>
+</ul>
+<h2 id="logging">Logging</h2>
+<p>Mosquitto logging is controlled by <code>mosquitto.conf</code>. This is the default configuration:</p>
+<pre><code>#log_dest file /mosquitto/log/mosquitto.log
+# To avoid flash wearing
+log_dest stdout
+</code></pre>
+
+<p>When <code>log_dest</code> is set to   <code>stdout</code>, you inspect Mosquitto's logs like this:</p>
+<pre><code>$ docker logs mosquitto
+</code></pre>
+
+<p>Logs written to <code>stdout</code> are ephemeral and will disappear when your IOTstack is restarted but this configuration reduces wear and tear on your SD card.</p>
+<p>The alternative, which <em>may</em> be more appropriate if you are running on an SSD or HD, is to change <code>mosquitto.conf</code> to be like this:</p>
+<pre><code>log_dest file /mosquitto/log/mosquitto.log
+# To avoid flash wearing
+#log_dest stdout
+</code></pre>
+
+<p>and then restart Mosquitto:</p>
+<pre><code>$ cd ~/IOTstack
+$ docker-compose restart mosquitto
+</code></pre>
+
+<p>With this configuration, you inspect Mosquitto's logs like this:</p>
+<pre><code>$ tail ~/IOTstack/volumes/mosquitto/log/mosquitto.log
+</code></pre>
+
+<p>Logs written to <code>mosquitto.log</code> do not disappear when your IOTstack is restarted. They persist until you take action to prune the file.</p>
+<h2 id="security">Security</h2>
+<p>By default, the Mosquitto container has no password. You can leave it that way if you like but it's always a good idea to secure your services.</p>
+<p>Assuming your IOTstack is running:</p>
+<ol>
+<li>
+<p>Open a shell in the mosquitto container:</p>
+<p><code>$ docker exec -it mosquitto sh</code></p>
+</li>
+<li>
+<p>In the following, replace «MYUSER» with the username you want to use for controlling access to Mosquitto and then run these commands:</p>
+<p><code>$ mosquitto_passwd -c /mosquitto/pwfile/pwfile «MYUSER»
+$ exit</code></p>
+<p><code>mosquitto_passwd</code> will ask you to type a password and confirm it.</p>
+<p>The path on the right hand side of:</p>
+<p><code>-c /mosquitto/pwfile/pwfile</code></p>
+<p>is <strong>inside</strong> the container. <strong>Outside</strong> the container, it maps to:</p>
+<p><code>~/IOTstack/volumes/mosquitto/pwfile/pwfile</code></p>
+<p>You should be able to see the result of setting a username and password like this:</p>
+<p><code>$ cat ~/IOTstack/volumes/mosquitto/pwfile/pwfile
+MYUSER:$6$lBYlxjWtLON0fm96$3qgcEyr/nKvxk3C2Jk36kkILJK7nLdIeLhuywVOVkVbJUjBeqUmCLOA/T6qAq2+hyyJdZ52ALTi+onMEEaM0qQ==
+$</code></p>
+</li>
+<li>
+<p>Open <code>mosquitto.conf</code> in a text editor. Find this line:</p>
+<p>```</p>
+<h1 id="password_file-mosquittopwfilepwfile">password_file /mosquitto/pwfile/pwfile</h1>
+<p>```</p>
+<p>Remove the # in front of password_file. Save.</p>
+</li>
+<li>
+<p>Restart Mosquitto:</p>
+<p><code>$ cd ~/IOTstack
+$ docker-compose restart mosquitto</code></p>
+</li>
+<li>
+<p>Use the new credentials where necessary (eg Node-Red).</p>
+</li>
+</ol>
+<p>Notes:</p>
+<ul>
+<li>You can revert to password-disabled state by going back to step 3, re-inserting the "#", then restarting Mosquitto as per step 4.</li>
+<li>If mosquitto keeps restarting after you implement password checking, the most likely explanation will be something wrong with the password file. Implement the advice in the previous note.</li>
+</ul>
+<h2 id="running-as-root">Running as root</h2>
+<p>By default, the Mosquitto container is launched as root but then downgrades its privileges to run as user ID 1883.</p>
+<p>Mosquitto is unusual because most containers just accept the privileges they were launched with. In most cases, that means containers run as root.</p>
+<blockquote>
+<p><small>Don't make the mistake of thinking this means that processes running <strong>inside</strong> containers can do whatever they like to your host system. A process inside a container is <strong>contained</strong>. What a process can affect <strong>outside</strong> its container is governed by the port, device and volume mappings you see in the <code>docker-compose.yml</code>.</small></p>
+</blockquote>
+<p>You can check how mosquitto has been launched like this:</p>
+<pre><code>$ ps -eo euser,ruser,suser,fuser,comm | grep mosquitto
+EUSER    RUSER    SUSER    FUSER    COMMAND
+1883     1883     1883     1883     mosquitto
+</code></pre>
+
+<p>If you have a use-case that needs Mosquitto to run with root privileges:</p>
+<ol>
+<li>
+<p>Open <code>docker-compose.yml</code> in a text editor and find this:</p>
+<p><code>mosquitto:
+    … [snip] …
+    user: "1883"</code></p>
+<p>change it to:</p>
+<p><code>mosquitto:
+    … [snip] …
+    user: "0"</code></p>
+</li>
+<li>
+<p>Edit <code>mosquitto.conf</code> to add this line:</p>
+<p><code>user root</code></p>
+</li>
+<li>
+<p>Apply the change:</p>
+<p><code>$ cd ~/IOTstack
+$ docker-compose stop mosquitto
+$ docker-compose up -d</code></p>
+</li>
+</ol>
+<blockquote>
+<p><small>A clean install of Mosquitto via the IOTstack menu sets everything in <code>volumes/mosquitto</code> to user and group 1883. That permission structure will still work if you change Mosquitto to run with root privileges. However, running as root <strong>may</strong> have the side effect of changing privilege levels within <code>volumes/mosquitto</code>. Keep this in mind if you decide to switch back to running Mosquitto as user 1883 because it is less likely to work.</small></p>
+</blockquote>
+<h2 id="port-9001">Port 9001</h2>
+<p>In earlier versions of IOTstack, <code>service.yml</code> included two port mappings which were included in <code>docker-compose.yml</code> when Mosquitto was chosen in the menu:</p>
+<pre><code>    ports:
+      - &quot;1883:1883&quot;
+      - &quot;9001:9001&quot;
+</code></pre>
+
+<p><a href="https://github.com/SensorsIot/IOTstack/issues/67">Issue 67</a> explored the topic of port 9001 and showed that:</p>
+<ul>
+<li>The base image for mosquitto did not expose port 9001; and</li>
+<li>The running container was not listening to port 9001.</li>
+</ul>
+<p>On that basis, the mapping for port 9001 was removed from <code>service.yml</code>.</p>
+<p>If you have a use-case that needs port 9001, you can re-enable support by:</p>
+<ol>
+<li>
+<p>Inserting the port mapping under the <code>mosquitto</code> definition in <code>docker-compose.yml</code>:</p>
+<p><code>- "9001:9001"</code></p>
+</li>
+<li>
+<p>Inserting the following lines in <code>mosquitto.conf</code>:</p>
+<p><code>listener 1883
+listener 9001</code></p>
+<p>You need <strong>both</strong> lines. If you omit 1883 then mosquitto will stop listening to port 1883 and will only listen to port 9001.</p>
+</li>
+<li>
+<p>Restarting the container:</p>
+<p><code>$ cd ~/IOTstack
+$ docker-compose up -d</code></p>
+</li>
+</ol>
+<p>Please consider raising an issue to document your use-case. If you think your use-case has general application then please also consider creating a pull request to make the changes permanent.</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../Misc/" title="Miscellaneous" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Miscellaneous
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../MotionEye/" title="MotionQye" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                MotionQye
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/vendor.3636a4ec.min.js"></script>
+      <script src="../assets/javascripts/bundle.e9fe3281.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      
+      <script>
+        app = initialize({
+          base: "..",
+          features: [],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.5eca75d3.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>
