@@ -1,0 +1,45 @@
+version: "2.0"
+services:
+  influxdb:
+    container_name: influxdb
+    image: "influxdb:latest"
+    restart: unless-stopped
+    ports:
+      - 8086:8086
+      - 8083:8083
+      - 2003:2003
+    env_file:
+      - /influxdb/influxdb.env
+    volumes:
+      - /influxdb/data:/var/lib/influxdb
+  nodered:
+    container_name: nodered
+    build: /nodered/.
+    restart: unless-stopped
+    user: "0"
+    privileged: true
+    env_file: /nodered/nodered.env
+    ports:
+      - 1880:1880
+    volumes:
+      - /nodered/data:/data
+  grafana:
+    container_name: grafana
+    image: grafana/grafana
+    restart: unless-stopped
+    user: "0"
+    ports:
+      - 3000:3000
+    env_file:
+      - /grafana/grafana.env
+    volumes:
+      - /grafana/data:/var/lib/grafana
+      - /grafana/log:/var/log/grafana
+  telegraf:
+    container_name: telegraf
+    image: telegraf
+    volumes:
+      - /telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+    depends_on:
+      - influxdb
+      - mosquitto
