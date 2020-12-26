@@ -80,3 +80,56 @@ We have a Discord server setup for discussions: [IOTstack Discord channel](https
 You can also report bugs or suggestions to our Github: https://github.com/SensorsIot/IOTstack/issues
 
 If you use some of the tools in the project please consider donating or contributing on their projects. It doesn't have to be monetary. Reporting bugs and creating Pull Requests helps improve the projects for everyone.
+
+## Sidenotes
+
+# Rebase from fork
+git remote add upstream https://github.com/SensorsIot/IOTstack.git
+git fetch upstream
+git checkout master
+git rebase upstream/master
+
+# Setup on a CM4 with a CM4 IO-Board
+
+Here the Lite version of RaspberrypiOS is used
+
+How to flash the eMMC on a Raspberry Pi Compute Module 4 -> https://www.youtube.com/watch?v=jp_mF1RknU4
+
+https://www.youtube.com/watch?v=KJRMjUzlHI8
+
+How to Find Raspberry Pi IP Address: Try These Ways -> ping raspberrypi -> https://www.raspberrypistarterkits.com/how-to/find-raspberry-pi-ip-address/
+
+# command before starting with iostack
+passwd
+sudo nano /etc/hostname (cm4)
+sudo apt-get update
+sudo apt-get upgrade
+
+sudo apt-get install mc
+
+# starting iostack
+curl -fsSL https://raw.githubusercontent.com/SensorsIot/IOTstack/master/install.sh | bash
+sudo reboot
+
+Selected only grafana, nodered, mosquitto, pihole, mariadb, portainer-ce
+
+cd ~/IOTstack
+git remote set-url origin https://github.com/SensorsIot/IOTstack.git
+git pull origin master
+git checkout master
+docker-compose down
+./menu.sh
+docker-compose up -d
+
+# sensehat
+
+https://pythonhosted.org/sense-hat/
+
+one fix is required:
+sudo nano /boot/config.txt
+Scroll to the bottom of the file and add this line;
+dtoverlay=rpi-sense
+
+# issues i had
+telegraf crashed because telegraf.conf was a directory
+-> manually copied the config over from templates
