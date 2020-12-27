@@ -130,6 +130,32 @@ sudo nano /boot/config.txt
 Scroll to the bottom of the file and add this line;
 dtoverlay=rpi-sense
 
+# generate your ssl certificate
+
+https://mosquitto.org/man/mosquitto-tls-7.html
+
+sudo apt-get install openssl
+mkdir volumes/cert
+cd columes/cert
+
+openssl genrsa -des3 -out ca.key 2048
+openssl req -new -x509 -days 1826 -key ca.key -out ca.crt
+openssl genrsa -out server.key 2048
+openssl req -new -out server.csr -key server.key
+openssl x509 -req -in server.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out server.crt -days 360
+
+openssl rsa -in server.key -out server.key
+
+# changes to mosquitto
+
+http://www.steves-internet-guide.com/mosquitto-tls/
+https://mosquitto.org/man/mosquitto-tls-7.html
+
+modifications needed in compose and config (see changes in the template)
+
+go into the mosquitto docker to create the password using the command:
+mosquitto_passwd -c pwfile mosquitto
+
 # issues i had
 telegraf crashed because telegraf.conf was a directory
 -> manually copied the config over from templates
