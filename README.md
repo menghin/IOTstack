@@ -175,6 +175,19 @@ docker exec -it nodered npx node-red admin hash-pw
 
 changes required to mysettings.js
 
+# changes to grafana
+
+https://grafana.com/docs/grafana/latest/installation/docker/#alpine-image-recommended
+https://grafana.com/docs/grafana/latest/getting-started/getting-started/
+https://community.grafana.com/t/grafana-https-configuration/524
+
+mkdir ~/IOTstack/services/grafana
+mkdir ~/IOTstack/services/grafana/config
+docker cp grafana:/etc/grafana/ ~/IOTstack/services/grafana/config/
+move directory content where grafana ini is to ~/IOTstack/services/grafana/config/
+
+changes required to grafana.ini and compose
+
 # issues i had
 telegraf crashed because telegraf.conf was a directory
 -> manually copied the config over from templates
