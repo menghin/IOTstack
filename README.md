@@ -160,6 +160,21 @@ mosquitto_passwd -c pwfile mosquitto
 
 modifications needed in compose
 
+# changes to nodered
+
+http://www.steves-internet-guide.com/securing-node-red-ssl/
+https://discourse.nodered.org/t/using-command-line-access-with-the-docker-install/30434/5
+
+in volumes/cert
+openssl genrsa -out node-key.pem 2048
+openssl req -new -sha256 -key node-key.pem -out node-csr.pem
+openssl x509 -req -in node-csr.pem -signkey node-key.pem -out node-cert.pem
+
+generate a password with
+docker exec -it nodered npx node-red admin hash-pw
+
+changes required to mysettings.js
+
 # issues i had
 telegraf crashed because telegraf.conf was a directory
 -> manually copied the config over from templates

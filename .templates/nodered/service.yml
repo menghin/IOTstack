@@ -10,6 +10,7 @@
       - "1880:1880"
     volumes:
       - ./volumes/nodered/data:/data
+      - ./volumes/cert:/data/cert  
       - /var/run/docker.sock:/var/run/docker.sock
       - /var/run/dbus/system_bus_socket:/var/run/dbus/system_bus_socket
     devices:
