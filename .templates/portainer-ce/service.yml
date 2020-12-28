@@ -8,3 +8,5 @@
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./volumes/portainer-ce/data:/data
+      - ./volumes/cert:/certs
+    command: --ssl --sslcert /certs/server.crt --sslkey /certs/server.key

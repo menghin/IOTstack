@@ -156,6 +156,10 @@ modifications needed in compose and config (see changes in the template)
 go into the mosquitto docker to create the password using the command:
 mosquitto_passwd -c pwfile mosquitto
 
+# changes to portainer-ce
+
+modifications needed in compose
+
 # issues i had
 telegraf crashed because telegraf.conf was a directory
 -> manually copied the config over from templates
