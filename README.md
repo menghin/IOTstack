@@ -80,3 +80,133 @@ We have a Discord server setup for discussions: [IOTstack Discord channel](https
 You can also report bugs or suggestions to our Github: https://github.com/SensorsIot/IOTstack/issues
 
 If you use some of the tools in the project please consider donating or contributing on their projects. It doesn't have to be monetary. Reporting bugs and creating Pull Requests helps improve the projects for everyone.
+
+## Sidenotes
+
+# Rebase from fork
+git remote add upstream https://github.com/SensorsIot/IOTstack.git
+git fetch upstream
+git checkout master
+git rebase upstream/master
+
+# Setup on a CM4 with a CM4 IO-Board
+
+Here the Lite version of RaspberrypiOS is used
+
+How to flash the eMMC on a Raspberry Pi Compute Module 4 -> https://www.youtube.com/watch?v=jp_mF1RknU4
+
+https://www.youtube.com/watch?v=KJRMjUzlHI8
+
+How to Find Raspberry Pi IP Address: Try These Ways -> ping raspberrypi -> https://www.raspberrypistarterkits.com/how-to/find-raspberry-pi-ip-address/
+
+# command before starting with iostack
+passwd
+sudo nano /etc/hostname (cm4)
+sudo apt-get update
+sudo apt-get upgrade
+
+sudo apt-get install mc
+
+# starting iostack
+curl -fsSL https://raw.githubusercontent.com/SensorsIot/IOTstack/master/install.sh | bash
+sudo reboot
+
+Selected only grafana, nodered, mosquitto, pihole, mariadb, portainer-ce
+
+cd ~/IOTstack
+git remote set-url origin https://github.com/SensorsIot/IOTstack.git
+git pull origin master
+git checkout master
+docker-compose down
+./menu.sh
+docker-compose up -d
+
+# sensehat
+
+https://pythonhosted.org/sense-hat/
+
+one fix is required:
+sudo nano /boot/config.txt
+Scroll to the bottom of the file and add this line;
+dtoverlay=rpi-sense
+
+# Proposal for naming
+
+influxdb:
+- one database per location
+
+Nodered:
+- use the .templates\nodered\reference_flow.json for the naming and how to connect the sensors to influxdb
+- before importing replace the name of the sensor and its location name with your own
+  <LOCATION_NAME> ... name of the location
+  <SENSOR_NAME> ... name of the sensor
+- i recommend to not use full names for the location more synonyms which you understand
+- each sensor data gets its own subentry
+
+Grafana:
+- use the .templates\grafana\reference_dashboard.json for the naming
+- the database name is the <LOCATION_NAME>
+- before importing replace the name of the sensor with your own
+  <SENSOR_NAME> ... name of the sensor
+
+# generate your ssl certificate
+
+https://mosquitto.org/man/mosquitto-tls-7.html
+
+sudo apt-get install openssl
+mkdir volumes/cert
+cd columes/cert
+
+openssl genrsa -des3 -out ca.key 2048
+openssl req -new -x509 -days 1826 -key ca.key -out ca.crt
+openssl genrsa -out server.key 2048
+openssl req -new -out server.csr -key server.key
+openssl x509 -req -in server.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out server.crt -days 360
+
+openssl rsa -in server.key -out server.key
+
+# changes to mosquitto
+
+http://www.steves-internet-guide.com/mosquitto-tls/
+https://mosquitto.org/man/mosquitto-tls-7.html
+
+modifications needed in compose and config (see changes in the template)
+
+go into the mosquitto docker to create the password using the command:
+mosquitto_passwd -c pwfile mosquitto
+
+# changes to portainer-ce
+
+modifications needed in compose
+
+# changes to nodered
+
+http://www.steves-internet-guide.com/securing-node-red-ssl/
+https://discourse.nodered.org/t/using-command-line-access-with-the-docker-install/30434/5
+
+in volumes/cert
+openssl genrsa -out node-key.pem 2048
+openssl req -new -sha256 -key node-key.pem -out node-csr.pem
+openssl x509 -req -in node-csr.pem -signkey node-key.pem -out node-cert.pem
+
+generate a password with
+docker exec -it nodered npx node-red admin hash-pw
+
+changes required to mysettings.js
+
+# changes to grafana
+
+https://grafana.com/docs/grafana/latest/installation/docker/#alpine-image-recommended
+https://grafana.com/docs/grafana/latest/getting-started/getting-started/
+https://community.grafana.com/t/grafana-https-configuration/524
+
+mkdir ~/IOTstack/services/grafana
+mkdir ~/IOTstack/services/grafana/config
+docker cp grafana:/etc/grafana/ ~/IOTstack/services/grafana/config/
+move directory content where grafana ini is to ~/IOTstack/services/grafana/config/
+
+changes required to grafana.ini and compose
+
+# issues i had
+telegraf crashed because telegraf.conf was a directory
+-> manually copied the config over from templates

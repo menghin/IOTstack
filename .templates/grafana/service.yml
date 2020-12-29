@@ -18,8 +18,10 @@
       # - GF_SECURITY_ALLOW_EMBEDDING=true # Allows embedding externally
       # - GF_AUTH_ANONYMOUS_ENABLED=true # Allows public read access to graphs
     volumes:
+      - ./services/grafana/config:/etc/grafana
       - ./volumes/grafana/data:/var/lib/grafana
       - ./volumes/grafana/log:/var/log/grafana
+      - ./volumes/cert:/cert
     networks:
       - iotstack_nw
     logging:
