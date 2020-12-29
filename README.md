@@ -130,6 +130,25 @@ sudo nano /boot/config.txt
 Scroll to the bottom of the file and add this line;
 dtoverlay=rpi-sense
 
+# Proposal for naming
+
+influxdb:
+- one database per location
+
+Nodered:
+- use the .templates\nodered\reference_flow.json for the naming and how to connect the sensors to influxdb
+- before importing replace the name of the sensor and its location name with your own
+  <LOCATION_NAME> ... name of the location
+  <SENSOR_NAME> ... name of the sensor
+- i recommend to not use full names for the location more synonyms which you understand
+- each sensor data gets its own subentry
+
+Grafana:
+- use the .templates\grafana\reference_dashboard.json for the naming
+- the database name is the <LOCATION_NAME>
+- before importing replace the name of the sensor with your own
+  <SENSOR_NAME> ... name of the sensor
+
 # generate your ssl certificate
 
 https://mosquitto.org/man/mosquitto-tls-7.html
