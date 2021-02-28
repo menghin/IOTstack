@@ -25,8 +25,8 @@
 #   sudo bash ./scripts/backup.sh 2 pi
 #     This will only produce a backup in the rollowing folder and change all the permissions to the 'pi' user.
 
-if [ -d "./menu.sh" ]; then
-	echo "./menu.sh file was not found. Ensure that you are running this from IOTstack's directory."
+if [ -d "./docker-compose.yml" ]; then
+	echo "./docker-compose.yml file was not found. Ensure that you are running this from IOTstack's directory."
   exit 1
 fi
 
@@ -53,10 +53,11 @@ TMPDIR=./.tmp
 DOW=$(date +%u)
 BASEBACKUPFILE="$(date +"%Y-%m-%d_%H%M")"
 TMPBACKUPFILE="$TMPDIR/backup/backup_$BASEBACKUPFILE.tar.gz"
+TMPBACKUPFILEENC="$TMPDIR/backup/backup_$BASEBACKUPFILE.enc"
 BACKUPLIST="$TMPDIR/backup-list_$BASEBACKUPFILE.txt"
 LOGFILE="$BASEDIR/logs/backup_$BASEBACKUPFILE.log"
-BACKUPFILE="$BASEDIR/backup/backup_$BASEBACKUPFILE.tar.gz"
-ROLLING="$BASEDIR/rolling/backup_$DOW.tar.gz"
+BACKUPFILEENC="$BASEDIR/backup/backup_$BASEBACKUPFILE.enc"
+ROLLINGENC="$BASEDIR/rolling/backup_$DOW.enc"
 
 [ -d ./backups ] || mkdir ./backups
 [ -d ./backups/logs ] || mkdir -p ./backups/logs
@@ -74,11 +75,11 @@ echo "Current Directory: $(pwd)" >> $LOGFILE
 echo "Backup Type: $BACKUPTYPE" >> $LOGFILE
 
 if [[ "$BACKUPTYPE" -eq "1" || "$BACKUPTYPE" -eq "3" ]]; then
-  echo "Backup File: $BACKUPFILE" >> $LOGFILE
+  echo "Backup File (encrypted): $BACKUPFILEENC" >> $LOGFILE
 fi
 
 if [[ "$BACKUPTYPE" -eq "2" || "$BACKUPTYPE" -eq "3" ]]; then
-  echo "Rolling File: $ROLLING" >> $LOGFILE
+  echo "Rolling File (encrypted): $ROLLINGENC" >> $LOGFILE
 fi
 
 echo "" >> $BACKUPLIST
@@ -98,16 +99,17 @@ echo "./volumes/" >> $BACKUPLIST
 [ -f "./pre_backup.sh" ] && echo "./pre_backup.sh" >> $BACKUPLIST
 
 sudo tar -czf $TMPBACKUPFILE -T $BACKUPLIST >> $LOGFILE 2>&1
+openssl aes-256-cbc -a -salt -iter 5 -in $TMPBACKUPFILE -out $TMPBACKUPFILEENC -pass file:./scripts/.passin
 
-[ -f "$ROLLING" ] && ROLLINGOVERWRITTEN=1 && rm -rf $ROLLING
+[ -f "$ROLLINGENC" ] && ROLLINGOVERWRITTEN=1 && rm -rf $ROLLINGENC
 
 sudo chown -R $USER:$USER $TMPDIR/backup* >> $LOGFILE 2>&1
 
 if [[ "$BACKUPTYPE" -eq "1" || "$BACKUPTYPE" -eq "3" ]]; then
-  cp $TMPBACKUPFILE $BACKUPFILE
+  cp $TMPBACKUPFILEENC $BACKUPFILEENC
 fi
 if [[ "$BACKUPTYPE" -eq "2" || "$BACKUPTYPE" -eq "3" ]]; then
-  cp $TMPBACKUPFILE $ROLLING
+  cp $TMPBACKUPFILEENC $ROLLINGENC
 fi
 
 if [[ "$BACKUPTYPE" -eq "2" || "$BACKUPTYPE" -eq "3" ]]; then
@@ -118,7 +120,7 @@ if [[ "$BACKUPTYPE" -eq "2" || "$BACKUPTYPE" -eq "3" ]]; then
   fi
 fi
 
-echo "Backup Size (bytes): $(stat --printf="%s" $TMPBACKUPFILE)" >> $LOGFILE
+echo "Backup Size (bytes): $(stat --printf="%s" $TMPBACKUPFILEENC)" >> $LOGFILE
 echo "" >> $LOGFILE
 
 echo "Executing postbackup scripts" >> $LOGFILE
@@ -128,7 +130,7 @@ echo "" >> $LOGFILE
 echo "Finished At: $(date +"%Y-%m-%dT%H-%M-%S")" >> $LOGFILE
 echo "" >> $LOGFILE
 
-if [[ -f "$TMPBACKUPFILE" ]]; then
+if [[ -f "$TMPBACKUPFILEENC" ]]; then
   echo "Items backed up:" >> $LOGFILE
   cat $BACKUPLIST >> $LOGFILE 2>&1
   echo "" >> $LOGFILE
@@ -136,6 +138,7 @@ if [[ -f "$TMPBACKUPFILE" ]]; then
   echo " - No items" >> $LOGFILE 2>&1
   rm -rf $BACKUPLIST >> $LOGFILE 2>&1
   rm -rf $TMPBACKUPFILE >> $LOGFILE 2>&1
+  rm -rf $TMPBACKUPFILEENC >> $LOGFILE 2>&1
 else
   echo "Something went wrong backing up. The temporary backup file doesn't exist. No temporary files were removed"
   echo "Files: "

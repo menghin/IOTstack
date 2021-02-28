@@ -207,6 +207,14 @@ move directory content where grafana ini is to ~/IOTstack/services/grafana/confi
 
 changes required to grafana.ini and compose
 
+# encrypted backup
+
+The backup.sh has been modified to encrpt the data with openssl. This allows that you can store your backupfiles whereever you want.
+To access your backup you can use following command:
+'''
+openssl aes-256-cbc -d -a -iter 5 -in backup_xxxx-xx-xx_xxxx.enc -out data_decrypted.tar.gz
+'''
+
 # issues i had
 telegraf crashed because telegraf.conf was a directory
 -> manually copied the config over from templates
